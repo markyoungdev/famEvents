@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.services', 'ngFacebook'])
+angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.services', 'famEvents.factories', 'ngFacebook'])
 
 .run(['$ionicPlatform','$rootScope', '$window', function($ionicPlatform, $rootScope, $window) {
   $ionicPlatform.ready(function() {
@@ -18,6 +18,7 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
    
   });
 
@@ -35,7 +36,7 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     $rootScope.$on('fb.load', function() {
-      $window.dispatchEvent(new Event('fb.load'));
+      $window.dispatchEvent(new Event('fb.load'));      
     });
 }])
 
@@ -47,7 +48,7 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
   *
   **/
   $facebookProvider.setAppId('571791002962232');  
-  $facebookProvider.setPermissions('email','user_likes','user_friends');  
+  $facebookProvider.setPermissions('email','user_likes','public_profile','user_location','read_stream','user_photos');  
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -73,6 +74,7 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
   .state('feeds', {
     url: "/feeds",   
     templateUrl: "templates/feeds.html",
+    controller: 'ProfileCtrl',
     data: { 
       authenticate: true
     }
@@ -86,6 +88,7 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
   .state('calendar', {
     url: "/calendar",   
     templateUrl: "templates/calendar.html",
+    controller: 'CalendarCtrl',
     data: { 
       authenticate: true
     }
@@ -99,6 +102,7 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
   .state('members', {
     url: "/family-members",   
     templateUrl: "templates/family-members.html",
+    controller: 'FamilyMembersCtrl',
     data: { 
       authenticate: true
     }
@@ -112,6 +116,7 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
   .state('groups', {
     url: "/family-groups",   
     templateUrl: "templates/family-groups.html",
+    controller: 'FamilyGroupsCtrl',
     data: { 
       authenticate: true
     }
