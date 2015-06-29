@@ -1,7 +1,6 @@
 angular.module('famEvents.controllers', [])
 
 .controller('LoginCtrl', ['$scope','$facebook','$state', function($scope, $facebook, $state) {
-	
 
 	$scope.$on('fb.auth.authResponseChange', function() {
       $scope.status = $facebook.isConnected();
@@ -9,26 +8,23 @@ angular.module('famEvents.controllers', [])
         $facebook.api('/me').then(function(user) {
           $scope.user = user;
         });
-
          $scope.getFriends();
-       
-		
-		//$state.go('profile');
-
       }
-    });
+  });
 
 	$scope.login = function(){
 		console.log('clicked');
 		if($scope.status) {
         	$facebook.logout();
       } else {
-        	$facebook.login();
+        	$facebook.login().then(function(data){
+            $state.go('profile');
+          })
       }
 	}
 
 	$scope.refresh = function() {
-    $facebook.api("/me").then( 
+    $facebook.api("/me").then(
       function(response) {
         $scope.welcomeMsg = "Welcome " + response.name;
       },
@@ -37,20 +33,20 @@ angular.module('famEvents.controllers', [])
 	  });
 	}
 
-	$scope.getFriends = function() {		
-      if(!$scope.status) return;
-      $facebook.cachedApi('/me/friends').then(function(friends) {
-      	//console.log(friends);
-        $scope.friends = friends.data;        
-      });
-    }
-
-  
+	$scope.getFriends = function() {
+    if(!$scope.status) return;
+    $facebook.cachedApi('/me/friends').then(function(friends) {
+    	//console.log(friends);
+      $scope.friends = friends.data;
+    });
+  }
 
 
 }])
 
 .controller('ProfileCtrl', ['$scope','$facebook', function($scope, $facebook){
+
+
 
 }])
 

@@ -18,7 +18,6 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
-
    
   });
 
