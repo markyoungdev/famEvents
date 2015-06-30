@@ -1,4 +1,28 @@
- // Ionic Starter App
+  // Initialize Parse
+  Parse.initialize("xnPLo7vYunPu2DBhc0NXa3F6avYzms22ULkWdQFV", "6XChXwXXOH7KPrRxKqrBSUEKmbqqvaBdrwdvDA2M");
+  window.fbAsyncInit = function() {
+    Parse.FacebookUtils.init({ // this line replaces FB.init({
+      appId      : '571791002962232', // Facebook App ID
+      status     : true,  // check Facebook Login status
+      cookie     : true,  // enable cookies to allow Parse to access the session
+      xfbml      : true,  // initialize Facebook social plugins on the page
+      version    : 'v2.3' // point to the latest Facebook Graph API version
+    });
+        // Run code after the Facebook SDK is loaded.
+  };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    /*$rootScope.$on('fb.load', function() {
+      $window.dispatchEvent(new Event('fb.load'));
+    });*/
+
+// Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -33,29 +57,6 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
     *
     **/
 
-     // Initialize Parse
-  Parse.initialize("8C4o9Oo9RW1Ly9zskJ7DvKtOPFrTXZCnMUq6d6iY", "QgIVqEWckKbya6YCgG11OyUtTVefVLyshV7Fam5g");
-  window.fbAsyncInit = function() {
-    Parse.FacebookUtils.init({ // this line replaces FB.init({
-      appId      : '571791002962232', // Facebook App ID
-      status     : true,  // check Facebook Login status
-      cookie     : true,  // enable cookies to allow Parse to access the session
-      xfbml      : true,  // initialize Facebook social plugins on the page
-      version    : 'v2.3' // point to the latest Facebook Graph API version
-    });
-        // Run code after the Facebook SDK is loaded.
-  };
-
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-    $rootScope.$on('fb.load', function() {
-      $window.dispatchEvent(new Event('fb.load'));
-    });
 
 
   });<!--// end device ready -->

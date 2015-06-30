@@ -9,17 +9,21 @@ angular.module('famEvents.factories', [])
 		}
 	})
 
-	.factory('FbUserSvc', ['$q','$facebook', function($q, $facebook){
+	.factory('FbUserSvc', ['$q', function($q){
 		return {
 			public: function() {
-				$facebook.cachedApi('/me/').then(function(data) {
-					return data;
+				var deferred = $q.defer();
+				 FB.api('/me', function(data) {
+					deferred.resolve(data);
 				});
+				 return deferred.promise;
 			},
 			friends: function() {
-				$facebook.cachedApi('/me/friends').then(function(data) {
-					return data;
+				var deferred = $q.defer();
+				 FB.api('/me/friends', function(data) {
+					deferred.resolve(data);
 				});
+				 return deferred.promise;
 			}
 
 		}
