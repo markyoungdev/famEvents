@@ -1,12 +1,14 @@
 angular.module('famEvents.controllers', [])
 
-.controller('LoginCtrl', ['$scope','$facebook', function($scope, $facebook) {
+.controller('LoginCtrl', ['$scope','$facebook','$state', function($scope, $facebook, $state) {
 
 	$scope.$on('fb.auth.authResponseChange', function() {
       $scope.status = $facebook.isConnected();
       if($scope.status) {
         $facebook.api('/me').then(function(user) {
           $scope.user = user;
+          $state.go('profile');
+
         });
       }
     });
@@ -14,7 +16,10 @@ angular.module('famEvents.controllers', [])
 	$scope.login = function(){
 		console.log('clicked');
 		if($scope.status) {
-        	$facebook.logout();
+        	$facebook.logout(function(response) {
+            console.log(response);
+
+          });
       } else {
         	$facebook.login();
       }

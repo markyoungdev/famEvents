@@ -1,1 +1,41 @@
 /* Empty. Add your own CSS if you like */
+/**
+*
+* Base styles
+*
+**/
+body{
+	width: 640px;
+	margin: 0 auto;
+}
+
+/**
+*
+* Login page styles
+*
+**/
+.bar.bar-stable{
+	background:transparent;
+	border:0;
+}
+.login-container.card{
+	box-shadow: none;
+	background: transparent;
+}
+.login-container.card form .item-body{
+	border:0;
+	background:transparent;
+}
+.login-view {
+	background: url(img/background.png) no-repeat 0 0;
+	background-size: cover;
+}
+/**
+*
+* profile page styles
+*
+**/
+.profile-view .row,
+.profile-view .col{
+	padding:0;
+}
