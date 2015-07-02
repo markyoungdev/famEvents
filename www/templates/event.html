@@ -1,0 +1,26 @@
+<ion-view class="Event-view">
+ <ion-nav-buttons side="left">
+    <button class="button button-icon icon ion-arrow-left-c" ui-sref="list-events()"></button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button  class="button button-icon icon" ui-sref="edit-event({eventID: event.id})">Edit</button>
+  </ion-nav-buttons>
+
+  <ion-nav-title>
+    <span>{{event.name}}</span>
+  </ion-nav-title>
+
+  <ion-content scroll="false" padding="false">
+    <ion-list ng-repeat="(attribute, value) in event">
+      <ion-item>
+      <label>
+        <span>{{attribute}}:</span> {{value}}
+      </label>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
+
+

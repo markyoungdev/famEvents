@@ -29,4 +29,46 @@ angular.module('famEvents.factories', [])
 		}
 
 	}])
+
+	.factory('getEvents', ['$q', function($q){
+		return {
+			list: function() {
+				var deferred = $q.defer();
+				var Events = Parse.Object.extend("event");
+				var query = new Parse.Query(Events);
+				query.find({
+				  success: function(events) {
+				    // The object was retrieved successfully.
+				    deferred.resolve(events);
+				  },
+				  error: function(object, error) {
+				    // The object was not retrieved successfully.
+				    // error is a Parse.Error with an error code and message.
+				  }
+				});
+				return deferred.promise;
+			}
+		}
+	}])
+
+	.factory('getEvent', ['$q', function($q){
+		return {
+			list: function(eventID) {
+				var deferred = $q.defer();
+				var Events = Parse.Object.extend("event");
+				var query = new Parse.Query(Events);
+				query.get(eventID,{
+				  success: function(events) {
+				    // The object was retrieved successfully.
+				    deferred.resolve(events);
+				  },
+				  error: function(object, error) {
+				    // The object was not retrieved successfully.
+				    // error is a Parse.Error with an error code and message.
+				  }
+				});
+				return deferred.promise;
+			}
+		}
+	}])
 	;

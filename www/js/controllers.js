@@ -51,9 +51,10 @@ angular.module('famEvents.controllers', [])
         console.log(user);
         if (!user.existed()) {
           console.log("User signed up and logged in through Facebook!");
-          $state.go('profile');
+          $state.go('create-event');
         } else {
           console.log("User logged in through Facebook!");
+           $state.go('create-event');
         }
       },
       error: function(user, error) {
@@ -90,5 +91,91 @@ angular.module('famEvents.controllers', [])
 
 .controller('FamilyGroupsCtrl', ['$scope', function($scope){
 
+}])
+
+.controller('EventCtrl', ['$scope','$state','getEvent', function($scope, $state, getEvent){
+  //console.log($state.params.eventID)
+  getEvent.list($state.params.eventID)
+  .then(function(value){
+      var item = {}
+      item.id = value.id;
+      item.date = value.get('date');
+      item.name = value.get('name');
+      item.gender = value.get('gender');
+      $scope.event = item;
+      console.log($scope.event);
+  })
+  $scope.goBack = function(){
+    $state.go('list-events');
+  }
+
+  $scope.editEvent = function(){
+    getEvent.list($state.params.eventID)
+    .then(function(value){
+      $state.go('edit')
+    });
+  }
+
+}])
+
+.controller('ListEventsCtrl', ['$scope','$state','getEvents', function($scope, $state, getEvents){
+  $scope.events = [];
+  getEvents.list().then(function(events){
+   // $scope.events = events;
+    console.log(events);
+    angular.forEach(events, function(value, key) {
+      var item = {}
+      item.id = value.id;
+      item.date = value.get('date');
+      item.name = value.get('name');
+      item.gender = value.get('gender');
+      //console.log(item);
+      $scope.events.push(item);
+    });
+     console.log($scope.events);
+  });
+
+}])
+
+.controller('CreateEventCtrl', ['$scope','FbUserSvc', '$state', function($scope, FbUserSvc, $state){
+  //console.log(FbUserSvc.public());
+
+  $scope.createEvent = function(task) {
+    console.log(task);
+
+    var BirthdayEvent = Parse.Object.extend("event");
+    var birthdayEvent = new BirthdayEvent();
+
+    angular.forEach(task, function(value, key) {
+      birthdayEvent.set(key, value);
+    });
+
+    birthdayEvent.save(null, {
+      success: function(birthdayEvent) {
+        // Execute any logic that should take place after the object is saved.
+        console.log('New object created with objectId: ' + birthdayEvent.id);
+      },
+      error: function(birthdayEvent, error) {
+        // Execute any logic that should take place if the save fails.
+        // error is a Parse.Error with an error code and message.
+        console.log('Failed to create new object, with error code: ' + error.message);
+      }
+    });
+  };
+
+}])
+
+.controller('EditEventsCtrl', ['$scope','getEvent','$state', function($scope, getEvent, $state){
+    console.log($state);
+    getEvent.list($state.params.eventID)
+    .then(function(value){
+        var item = {}
+        //item.id = '<span style="display:none;">'+value.id+'</span>';
+        item.date = value.get('date');
+        item.name = value.get('name');
+        item.gender = value.get('gender');
+        $scope.event = item;
+        console.log($scope.event);
+    })
 }])
 ;

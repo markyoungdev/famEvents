@@ -1,1 +1,10 @@
 /* Empty. Add your own CSS if you like */
+/**
+*
+* Event view styles
+*
+**/
+.Event-view .item label > span{
+	text-transform: capitalize;
+	font-weight:bold;
+}

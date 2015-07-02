@@ -188,6 +188,62 @@ angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.servic
     }*/
   })
 
+  .state('create-event', {
+    url: "/create-event",
+    templateUrl: "templates/create-event.html",
+    controller: 'CreateEventCtrl',
+    data: {
+      authenticate: true
+    }
+    /*views: {
+      'menuContent': {
+        templateUrl: "templates/index.html",
+        controller: 'ProfileCtrl'
+    }*/
+  })
+
+  .state('list-events', {
+    url: "/list-events",
+    templateUrl: "templates/list-events.html",
+    controller: 'ListEventsCtrl',
+    data: {
+      authenticate: true
+    }
+    /*views: {
+      'menuContent': {
+        templateUrl: "templates/index.html",
+        controller: 'ProfileCtrl'
+    }*/
+  })
+
+   .state('edit-event', {
+    url: "/edit-event/:eventID",
+    templateUrl: "templates/edit-events.html",
+    controller: 'EditEventsCtrl',
+    data: {
+      authenticate: true
+    }
+    /*views: {
+      'menuContent': {
+        templateUrl: "templates/index.html",
+        controller: 'ProfileCtrl'
+    }*/
+  })
+
+  .state('event', {
+    url: "/event/:eventID",
+    templateUrl: "templates/event.html",
+    controller: 'EventCtrl',
+    data: {
+      authenticate: true
+    }
+    /*views: {
+      'menuContent': {
+        templateUrl: "templates/index.html",
+        controller: 'ProfileCtrl'
+    }*/
+  })
+
 
   ;
 
