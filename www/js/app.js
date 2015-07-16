@@ -29,7 +29,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.services', 'famEvents.factories'])
+angular.module('famEvents', ['ionic', 'famEvents.controllers', 'famEvents.services', 'famEvents.factories', 'ngTagsInput', 'ionic-datepicker'])
 
 .run(['$ionicPlatform','$rootScope', '$window', '$state', function($ionicPlatform, $rootScope, $window, $state) {
 

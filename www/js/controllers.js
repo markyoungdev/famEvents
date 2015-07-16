@@ -67,15 +67,12 @@ angular.module('famEvents.controllers', [])
 
 }])
 
-.controller('ProfileCtrl', ['$scope', '$q', 'FbUserSvc', function($scope, $q, FbUserSvc ){
-  console.log('here');
+.controller('ProfileCtrl', ['$scope', '$q', 'FbUserSvc','$ionicNavBarDelegate', function($scope, $q, FbUserSvc, $ionicNavBarDelegate ){
+  $ionicNavBarDelegate.showBackButton(false);
   var deferred = $q.defer();
 
   console.log(FbUserSvc.public());
   //console.log(getFacebookProfileInfo());
-
-
-
 }])
 
 
@@ -93,15 +90,21 @@ angular.module('famEvents.controllers', [])
 
 }])
 
-.controller('EventCtrl', ['$scope','$state','getEvent', function($scope, $state, getEvent){
-  //console.log($state.params.eventID)
+.controller('EventCtrl', ['$scope','$state','getEvent','$ionicNavBarDelegate', function($scope, $state, getEvent, $ionicNavBarDelegate){
+  $ionicNavBarDelegate.showBackButton(false);
   getEvent.list($state.params.eventID)
   .then(function(value){
       var item = {}
+      $scope.tagsArray = [];
+      var tags = value.get('tags');
       item.id = value.id;
       item.date = value.get('date');
       item.name = value.get('name');
       item.gender = value.get('gender');
+      item.tags = $scope.tagsArray;
+      angular.forEach(tags, function(value, key) {
+        $scope.tagsArray.push(value.text);
+      });
       $scope.event = item;
       console.log($scope.event);
   })
@@ -118,10 +121,10 @@ angular.module('famEvents.controllers', [])
 
 }])
 
-.controller('ListEventsCtrl', ['$scope','$state','getEvents', function($scope, $state, getEvents){
+.controller('ListEventsCtrl', ['$scope','$state','getEvents','$ionicNavBarDelegate', function($scope, $state, getEvents, $ionicNavBarDelegate){
+  $ionicNavBarDelegate.showBackButton(false);
   $scope.events = [];
   getEvents.list().then(function(events){
-   // $scope.events = events;
     console.log(events);
     angular.forEach(events, function(value, key) {
       var item = {}
@@ -129,7 +132,7 @@ angular.module('famEvents.controllers', [])
       item.date = value.get('date');
       item.name = value.get('name');
       item.gender = value.get('gender');
-      //console.log(item);
+      item.tags = value.get('tags');
       $scope.events.push(item);
     });
      console.log($scope.events);
@@ -137,9 +140,8 @@ angular.module('famEvents.controllers', [])
 
 }])
 
-.controller('CreateEventCtrl', ['$scope','FbUserSvc', '$state', function($scope, FbUserSvc, $state){
-  //console.log(FbUserSvc.public());
-
+.controller('CreateEventCtrl', ['$scope','FbUserSvc', '$state','$ionicNavBarDelegate', function($scope, FbUserSvc, $state, $ionicNavBarDelegate){
+  $ionicNavBarDelegate.showBackButton(false);
   $scope.createEvent = function(task) {
     console.log(task);
 
@@ -165,17 +167,67 @@ angular.module('famEvents.controllers', [])
 
 }])
 
-.controller('EditEventsCtrl', ['$scope','getEvent','$state', function($scope, getEvent, $state){
-    console.log($state);
+.controller('EditEventsCtrl', ['$scope','getEvent','$state','$ionicNavBarDelegate','$q', function($scope, getEvent, $state, $ionicNavBarDelegate, $q){
+    $ionicNavBarDelegate.showBackButton(false);
+    var deferred = $q.defer();
+    var promise = deferred.promise;
+
+    $scope.event = {};
+    $scope.currentDate = new Date();
+    $scope.title = "Custom Title";
+
+    promise.then(function(data){
+      $scope.event =  data;
+    });
+
     getEvent.list($state.params.eventID)
     .then(function(value){
         var item = {}
-        //item.id = '<span style="display:none;">'+value.id+'</span>';
+        item.id = value.id;
         item.date = value.get('date');
         item.name = value.get('name');
         item.gender = value.get('gender');
-        $scope.event = item;
-        console.log($scope.event);
+        item.tags = value.get('tags');
+        deferred.resolve(item);
+        //$scope.event = item;
+        $scope.eventObj = value;
+       // $scope.event.name = 'test';
+
     })
+
+
+
+    $scope.datePickerCallback = function (val) {
+        if(typeof(val)==='undefined'){
+            console.log('Date not selected');
+        }else{
+
+            console.log('Selected date is : ', val);
+        }
+    };
+
+    $scope.editEvent = function(task) {
+
+    angular.forEach(task, function(value, key) {
+      $scope.eventObj.set(key, value);
+    });
+      $scope.eventObj.set('date', $scope.currentDate);
+
+    $scope.eventObj.save(null, {
+      success: function(birthdayEvent) {
+        // Execute any logic that should take place after the object is saved.
+        console.log('New object created with objectId: ' + birthdayEvent.id);
+        $state.go('list-events');
+
+      },
+      error: function(birthdayEvent, error) {
+        // Execute any logic that should take place if the save fails.
+        // error is a Parse.Error with an error code and message.
+        console.log('Failed to create new object, with error code: ' + error.message);
+      }
+    });
+  };
+
+
 }])
 ;

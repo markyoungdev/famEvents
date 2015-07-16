@@ -1,15 +1,13 @@
 <ion-view class="listEvents-view">
- <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  <ion-nav-buttons side="left">
+    <button class="button button-icon icon ion-ios-compose-outline" ui-sref="create-event()"></button>
   </ion-nav-buttons>
   <ion-nav-title>
     <span>Created Events</span>
   </ion-nav-title>
 
   <ion-content scroll="false" padding="true">
-      <form ng-submit="createEvent(event)">
         <ion-list>
-
           <ion-item ng-repeat="event in events"
             class="item-thumbnail-left" href="#/{{event.id}}" ui-sref="event({eventID: event.id})">
               <img ng-src="{{event.img}}">
@@ -29,7 +27,7 @@
             </ion-item>
 
         </ion-list>
-      </form>
+
   </ion-content>
 </ion-view>
 

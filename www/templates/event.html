@@ -1,6 +1,6 @@
 <ion-view class="Event-view">
  <ion-nav-buttons side="left">
-    <button class="button button-icon icon ion-arrow-left-c" ui-sref="list-events()"></button>
+    <button class="button button-icon icon ion-ios-arrow-thin-left" ui-sref="list-events()"></button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -13,7 +13,14 @@
 
   <ion-content scroll="false" padding="false">
     <ion-list ng-repeat="(attribute, value) in event">
-      <ion-item>
+
+      <ion-item ng-if="attribute == 'tags' && value.length > 0" >
+        <span ng-repeat="text in value">
+         Tags: {{text}},
+        </span>
+
+      </ion-item>
+      <ion-item  ng-if="attribute != 'tags'">
       <label>
         <span>{{attribute}}:</span> {{value}}
       </label>

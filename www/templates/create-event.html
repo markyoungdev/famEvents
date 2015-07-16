@@ -1,6 +1,6 @@
 <ion-view class="createEvent-view">
- <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+   <ion-nav-buttons side="left">
+    <button class="button button-icon icon ion-ios-list-outline" ui-sref="list-events()"></button>
   </ion-nav-buttons>
   <ion-nav-title>
     <span>Create Event</span>
@@ -24,7 +24,9 @@
               <ion-radio ng-model="event.gender" ng-value="'boy'">Boy</ion-radio>
               <ion-radio ng-model="event.gender" ng-value="'girl'">Girl</ion-radio>
             </label>
-
+            <label class="item item-input">
+              <tags-input ng-model="event.tags"></tags-input>
+            </label>
             <div class="padding">
               <button type="submit" class="button button-block button-positive">Create Event</button>
             </div>
