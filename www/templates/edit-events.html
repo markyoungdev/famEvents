@@ -19,7 +19,7 @@
               <span class="input-label">Event Date:</span>
               <!--<input type="date" ng-model="event.date"><br/>-->
               <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" title="title">
-                <button class="button button-block button-positive"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
+                <button class="button button-block button-positive" type="button"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
               </ionic-datepicker>
             </label>
             <label class="item item-input">

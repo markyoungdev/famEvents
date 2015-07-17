@@ -13,14 +13,24 @@
 
   <ion-content scroll="false" padding="false">
     <ion-list ng-repeat="(attribute, value) in event">
-
       <ion-item ng-if="attribute == 'tags' && value.length > 0" >
-        <span ng-repeat="text in value">
-         Tags: {{text}},
-        </span>
-
+        <label>
+          <span>Tags:</span>
+          <span ng-repeat="text in value" style="font-weight: normal;">
+            {{text}},
+          </span>
+        </label>
       </ion-item>
-      <ion-item  ng-if="attribute != 'tags'">
+      <ion-item ng-if="attribute == 'date' " >
+        <label>
+          <span>Date:</span>
+          <span ng-bind="event.date | date:'MM/dd/yyyy'" style="font-weight:normal;">
+           {{date}}
+          </span>
+        </label>
+      </ion-item>
+
+      <ion-item  ng-if="attribute != 'tags' && attribute != 'date' ">
       <label>
         <span>{{attribute}}:</span> {{value}}
       </label>

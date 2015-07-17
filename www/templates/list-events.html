@@ -12,7 +12,7 @@
             class="item-thumbnail-left" href="#/{{event.id}}" ui-sref="event({eventID: event.id})">
               <img ng-src="{{event.img}}">
               <h2>{{event.name}}</h2>
-              <p>{{event.date}}</p>
+              <p ng-bind="event.date | date:'MM/dd/yyyy'">{{event.date}}</p>
               <ion-option-button class="button-positive" ng-click="share(item)">
                 Share
               </ion-option-button>

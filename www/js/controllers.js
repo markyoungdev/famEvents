@@ -189,6 +189,7 @@ angular.module('famEvents.controllers', [])
         item.gender = value.get('gender');
         item.tags = value.get('tags');
         deferred.resolve(item);
+        $scope.currentDate = item.date;
         //$scope.event = item;
         $scope.eventObj = value;
        // $scope.event.name = 'test';
@@ -198,11 +199,12 @@ angular.module('famEvents.controllers', [])
 
 
     $scope.datePickerCallback = function (val) {
+
         if(typeof(val)==='undefined'){
             console.log('Date not selected');
         }else{
-
             console.log('Selected date is : ', val);
+            $scope.currentDate = val;
         }
     };
 
@@ -211,6 +213,7 @@ angular.module('famEvents.controllers', [])
     angular.forEach(task, function(value, key) {
       $scope.eventObj.set(key, value);
     });
+      console.log($scope.currentDate);
       $scope.eventObj.set('date', $scope.currentDate);
 
     $scope.eventObj.save(null, {
